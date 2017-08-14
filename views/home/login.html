@@ -1,0 +1,51 @@
+<% include ../layout/header.html%>
+
+
+<div id="main">
+  <% include ../layout/sidebar.html%>
+
+<div id="content">
+  <div class="panel">
+    <div class="header">
+      <ul class="breadcrumb">
+        <li><a href="/">主页</a><span class="divider">/</span></li>
+        <li class="active">登录</li>
+      </ul>
+    </div>
+    <div class="inner">
+
+       <h3><%=errMsg[0]%></h3>
+      <form id="signin_form" class="form-horizontal" action="/users/signin" method="post">
+        <div class="control-group">
+          <label class="control-label" for="name">用户名</label>
+
+          <div class="controls">
+            <input class="input-xlarge" id="name" name="name" size="30" type="text">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="upwd">密码</label>
+
+          <div class="controls">
+            <input class="input-xlarge" id="pass" name="upwd" size="30" type="password">
+          </div>
+        </div>
+        <input name="_csrf" value="jJB3R0PY-bkKSWNbkQZVkz9GAtZZ7jlv_MW0" type="hidden">
+
+        <div class="form-actions">
+          <input class="span-primary" value="登录" type="submit">
+          <a href="/auth/github">
+            <span class="span-info">
+              通过 GitHub 登录
+            </span>
+          </a>
+          <a id="forgot_password" href="/search_pass">忘记密码了?</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<% include ../layout/footer.html%>

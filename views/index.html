@@ -1,0 +1,95 @@
+<% include ./layout/header.html%>
+<div id="main">
+<% include ./layout/sidebar.html%>
+<div id="content">
+  <div class="panel">
+    <div class="header">
+        <a href="/?tab=all" class="topic-tab current-tab">全部</a>
+        <a href="/?tab=good" class="topic-tab ">精华</a>
+        <a href="/?tab=share" class="topic-tab ">分享</a>
+        <a href="/?tab=ask" class="topic-tab ">问答</a>
+        <a href="/?tab=job" class="topic-tab ">招聘</a>
+        <a href="/?tab=dev" class="topic-tab ">客户端测试</a>
+    </div>
+    <div class="inner no-padding">
+      <div id="topic_list">
+    <%if(topicData){%>
+      <%topicData.forEach(function(item){%>
+       <div class="cell">
+          <a class="user_avatar pull-left" href="/topic/show/<%=item._id%>">
+          <img src="/img/<%=item.uid.userpic?item.uid.userpic:'1.jpg'%>" title="<%=item.uid.uname%>">
+        </a>
+        <span class="reply_count pull-left">
+          <span class="count_of_replies" title="回复数">
+             <%=item.reply.length%>
+          </span>
+          <span class="count_seperator">/</span>
+          <span class="count_of_visits" title="点击数">
+            <%=item.visits%>
+          </span>
+       </span>
+      <a class="last_time pull-right" href="/topic/show/">
+        <%if(item.lastreplyuser){%>
+        <img class="user_small_avatar" src="/img/<%=item.lastreplyuser.userpic?item.lastreplyuser.userpic:'1.jpg'%>">
+        <%}else{%>
+          <img class="user_small_avatar" src="/img/1.jpg">
+          <%}%>
+        <span class="last_active_time"><%=stime(item.lastreplytime)%></span>
+      </a>
+      <div class="topic_title_wrapper">
+        <span class="put_top">置顶</span>
+        <a class="topic_title" href="/topic/show/<%=item._id%>" title="<%=item.title%>">
+          <%=item.title%>
+        </a>
+    </div>
+ </div>
+<%})%>
+<%}else{%>
+   <div class="cell">
+      <h1>社区还没有消息</h1>
+   </div>
+  <%}%>
+</div>
+    <div class="pagination" current_page="1">
+
+        <ul>
+      <%if(page==1){%>
+          <li class="disabled"><a>«</a></li>
+      <%}else{%>
+          <li class="disabled"><a href="/?page=1">«</a></li>
+      <%}%>
+
+      <%if(page>=4){%>
+          <li class="disabled"><a>...</a></li>
+      <%}%>
+
+      <%
+        var p=parseInt(page)+2;
+        if(p<5){
+          p=5
+        }
+      %>
+
+      <%for(var i=page-2;i<=p;i++){
+          if(i<1||i>pageMax){
+              continue;
+          }
+        %>
+
+          <li><a href="/?page=<%=i%>"><%=i%></a></li>
+       <%}%>
+
+
+      <%if(parseInt(page)>=4){%>
+          <li class="disabled"><a>...</a></li>
+      <%}%>
+
+          <li><a href="/?page=<%=pageMax%>">»</a></li>
+      </ul>
+    </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<% include ./layout/footer.html%>

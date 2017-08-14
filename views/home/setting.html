@@ -1,0 +1,107 @@
+<%include ../layout/header.html%>
+<div id="main">
+ <%include ../layout/sidebar.html%>
+<div id="content">
+  <div class="panel">
+    <div class="header">
+      <ul class="breadcrumb">
+        <li><a href="/">主页</a><span class="divider">/</span></li>
+        <li class="active">设置</li>
+      </ul>
+    </div>
+    <div class="inner">
+      <h3><%=errMsg%></h3>
+      <form id="setting_form" class="form-horizontal" enctype="multipart/form-data" action="/users/dosetting" method="post">
+        <div class="control-group">
+          <label class="control-label" for="uname">用户名</label>
+
+          <div class="controls">
+            <input class="input-xlarge readonly" id="name" name="uname" size="30" readonly value="<%=user.uname%>" type="text">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="email">电子邮件</label>
+
+          <div class="controls">
+            <input class="input-xlarge readonly" id="email" name="email" size="30" readonly value="<%=user.email%>" type="text">
+
+      	</div>
+
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="file">上传头像</label>
+            <div class="controls">
+              <img src="<%=user.userpic?'/img/'+user.userpic:'/img/1.jpg'%>" width="48",height="48">
+              <input type="file"  name="upload_file">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="signature">个性签名</label>
+
+          <div class="controls">
+            <textarea class="input-xlarge" id="signature" name="mark" size="30">
+            <%=user.mark%>
+            </textarea>
+          </div>
+        </div>
+        <input id="action" name="action" value="change_setting" type="hidden">
+        <input name="_csrf" value="<%=user._id%>" type="hidden">
+
+        <div class="form-actions">
+          <input class="span-primary submit_btn" data-loading-text="保存中.." value="保存设置" type="submit">
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="header">
+      <span class="col_fade">更改密码</span>
+    </div>
+    <div class="inner">
+      <form id="change_pass_form" class="form-horizontal"  action="/users/dochange" method="post">
+        <div class="control-group">
+          <label class="control-label" for="oldpwd">当前密码</label>
+          <div class="controls">
+            <input class="input-xlarge" id="old_pass" name="oldpwd" size="30" type="password">
+            <span><%=errMsg[0]%></span>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="newpwd">新密码</label>
+
+          <div class="controls">
+            <input class="input-xlarge" id="new_pass" name="newpwd" size="30" type="password">
+              <span><%=errMsgs[0]%></span>
+          </div>
+        </div>
+        <input id="action" name="action" value="change_password" type="hidden">
+        <input name="_csrf" value="" type="hidden">
+
+        <div class="form-actions">
+          <input class="span-primary submit_btn" id="update" data-loading-text="更改中.." value="更改密码" type="submit">
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="header">
+      <span class="col_fade">Access Token</span>
+    </div>
+    <div class="inner">
+      <div>
+        <span>字符串：</span>
+        9383acde-5165-49e2-a7b3-207748091c43
+      </div>
+      <div>
+        <span>二维码：</span>
+        <span id="access-token-qrcode" title="9383acde-5165-49e2-a7b3-207748091c43"><canvas width="200" height="200" style="display: none;"></canvas><img alt="Scan me!" style="display: block;" src="data:image/png;base64,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"></span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script src="/js/jquery-1.11.2.min.js"></script>
+
+<%include ../layout/footer.html%>
